@@ -1,0 +1,52 @@
+#Training
+learning_rate: 0.0005
+batch_size: 16
+weight_decay: 0.01
+lr_decay: 0.99
+epochs: 90
+
+# Model
+model_name: MotionAGFormer
+n_layers: 26
+dim_in: 3
+dim_feat: 128
+dim_rep: 512
+dim_out: 3
+mlp_ratio: 4
+act_layer: gelu
+attn_drop: 0.0
+drop: 0.0
+drop_path: 0.0
+use_layer_scale: True
+layer_scale_init_value: 0.00001
+use_adaptive_fusion: True
+num_heads: 8
+qkv_bias: False
+qkv_scale: null
+hierarchical: False
+use_temporal_similarity: True # Only useful when use_tcn = False
+neighbour_num: 2  # Only useful when use_temporal_similarity = True
+temporal_connection_len: 1 # Only useful when use_tcn = False, use_temporal_similarity = False
+use_tcn: False
+graph_only: False
+n_frames: 81
+
+# Data
+data_root: data/motion3d/
+flip: True
+stride: 9
+num_joints: 17
+out_joints: 17
+test_augmentation: True
+data_augmentation: True
+reverse_augmentation: False
+out_all: 1
+test_batch_size: 128
+
+# Loss
+lambda_3d_velocity: 20.0
+lambda_scale: 0.5
+lambda_lv: 0.0
+lambda_lg: 0.0
+lambda_a: 0.0
+lambda_av: 0.0

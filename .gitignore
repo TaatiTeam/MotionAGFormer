@@ -1,0 +1,5 @@
+.idea
+*.tar.xz
+*.pyc
+wandb
+checkpoint/*.pth.tr
