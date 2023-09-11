@@ -9,3 +9,7 @@ wandb
 torchprofile
 smplx
 scipy
+opencv-python
+numba
+scikit-image
+filterpy
