@@ -62,9 +62,9 @@ where config files are located at `configs/mpi`. Like Human3.6M, weight and bias
 ## Evaluation
 | Method            | # frames  | # Params | # MACs         | H3.6M weights | MPI-INF-3DHP weights |
 |-------------------|-----------|----------|----------------|---------------|----------------------|
-| MotionAGFormer-XS |     27    |   2.2M  |      1.0G     |    [download](https://drive.google.com/file/d/1Pab7cPvnWG8NOVd0nnL1iqAfYCUY4hDH/view?usp=sharing)   |       download (soon)      |
-| MotionAGFormer-S  |     81    |   4.8M  |      6.6G     |    [download](https://drive.google.com/file/d/1DrF7WZdDvRPsH12gQm5DPXbviZ4waYFf/view?usp=sharing)   |       download (soon)       |
-| MotionAGFormer-B  | 243 \| 81 |  11.7M  | 48.3G \| 16G |    [download](https://drive.google.com/file/d/1Iii5EwsFFm9_9lKBUPfN8bV5LmfkNUMP/view?usp=drive_link)   |       download (soon)      |
+| MotionAGFormer-XS |     27    |   2.2M  |      1.0G     |    [download](https://drive.google.com/file/d/1Pab7cPvnWG8NOVd0nnL1iqAfYCUY4hDH/view?usp=sharing)   |       [download](https://drive.google.com/file/d/1FebsaA-DGqB0Pba_dVXCQDedfG13Zu5O/view?usp=sharing)      |
+| MotionAGFormer-S  |     81    |   4.8M  |      6.6G     |    [download](https://drive.google.com/file/d/1DrF7WZdDvRPsH12gQm5DPXbviZ4waYFf/view?usp=sharing)   |       [download](https://drive.google.com/file/d/1RzTGl_9d_wm34ZnBqkQWqy22kOOq0Dx5/view?usp=sharing)       |
+| MotionAGFormer-B  | 243 \| 81 |  11.7M  | 48.3G \| 16G |    [download](https://drive.google.com/file/d/1Iii5EwsFFm9_9lKBUPfN8bV5LmfkNUMP/view?usp=drive_link)   |       [download](https://drive.google.com/file/d/18Pz0qQp7DvrrvDNqFtem5O5cBHBBAGg-/view?usp=sharing)      |
 | MotionAGFormer-L  | 243 \| 81 |  19.0M  | 78.3G \| 26G |    [download](https://drive.google.com/file/d/1WI8QSsD84wlXIdK1dLp6hPZq4FPozmVZ/view?usp=sharing)   |       [download](https://drive.google.com/file/d/10am2CelOV5Nt2NDhcEEMgFpdcuKN3J3G/view?usp=sharing)       |
 
 After downloading the weight from table above, you can evaluate Human3.6M models by:
