@@ -98,3 +98,14 @@ Our code refers to the following repositories:
 - [MHFormer](https://github.com/Vegetebird/MHFormer)
 
 We thank the authors for releasing their codes.
+
+## Citation
+If you find our work useful for your project, please consider citing the paper:
+```
+@inproceedings{motionagformer2024,
+  title     =   {MotionAGFormer: Enhancing 3D Human Pose Estimation with a Transformer-GCNFormer Network}, 
+  author    =   {Soroush Mehraban, Vida Adeli, Babak Taati},
+  booktitle =   {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  year      =   {2024}
+}
+```
