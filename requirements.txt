@@ -13,3 +13,4 @@ opencv-python
 numba
 scikit-image
 filterpy
+yacs
