@@ -1,5 +1,5 @@
 #Training
-learning_rate: 0.0002
+learning_rate: 0.0005
 batch_size: 16
 weight_decay: 0.01
 lr_decay: 0.99
