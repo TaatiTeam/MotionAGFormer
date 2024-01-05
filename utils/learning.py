@@ -1,5 +1,4 @@
 from model.MotionAGFormer import MotionAGFormer
-from utils.activation import SymSum
 from torch import nn
 import torch
 
@@ -29,8 +28,7 @@ class AverageMeter(object):
 def load_model(args):
     act_mapper = {
         "gelu": nn.GELU,
-        'relu': nn.ReLU,
-        'symsum': SymSum
+        'relu': nn.ReLU
     }
 
     if args.model_name == "MotionAGFormer":

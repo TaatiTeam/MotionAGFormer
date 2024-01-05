@@ -1,13 +1,12 @@
 import os
 import random
 import json
-from collections import defaultdict
 
 import numpy as np
 from torch.utils.data import Dataset
 import torch
 
-from utils.data import read_pkl, flip_data, crop_scale, posetrack2h36m, split_clips, resample, normalize_screen_coordinates
+from utils.data import read_pkl, flip_data, normalize_screen_coordinates
 from data.reader.generator_3dhp import ChunkedGenerator
 
 class Fusion(Dataset):
@@ -274,92 +273,7 @@ class MPI3DHP(Dataset):
             pose_3d_normalized = flip_data(pose_3d_normalized, self.left_joints, self.right_joints)
 
         return torch.FloatTensor(pose_2d), torch.FloatTensor(pose_3d_normalized)
-            
-
-class PoseTrackDataset2D(Dataset):
-    def __init__(self, flip=True, scale_range=[0.25, 1], data_root_2d='data/motion2d/', n_frames=243, data_stride=81):
-        super(PoseTrackDataset2D, self).__init__()
-        self.n_frames = n_frames
-        self.data_stride = data_stride
-        self.flip = flip
-        data_root = os.path.join(data_root_2d, 'posetrack18_annotations/train/')
-        file_list = sorted(os.listdir(data_root))
-        all_motions = []
-        all_motions_filtered = []
-        self.scale_range = scale_range
-        for filename in file_list:
-            with open(os.path.join(data_root, filename), 'r') as file:
-                json_dict = json.load(file)
-                annots = json_dict['annotations']
-                motions = defaultdict(list)
-                for annot in annots:
-                    tid = annot['track_id']
-                    pose2d = np.array(annot['keypoints']).reshape(-1,3)
-                    motions[tid].append(pose2d)
-            all_motions += list(motions.values())
-        for motion in all_motions:
-            if len(motion)<30:
-                continue
-            motion = np.array(motion[:30])
-            if np.sum(motion[:,:,2]) <= 306:  # Valid joint num threshold
-                continue
-            motion = crop_scale(motion, self.scale_range) 
-            motion = posetrack2h36m(motion)
-            motion[motion[:,:,2]==0] = 0
-            if np.sum(motion[:,0,2]) < 30:
-                continue                      # Root all visible (needed for framewise rootrel)
-            all_motions_filtered.append(motion)
-
-        all_motions_filtered = self.extrapolate(all_motions_filtered)
-        all_motions_filtered = np.array(all_motions_filtered)
-        self.motions_2d = all_motions_filtered
-    
-    def extrapolate(self, motions):
-        extrapolated_motions = []
-        for motion in motions:
-            new_indices = resample(motion.shape[0], self.n_frames)
-            extrapolated_motions.append(motion[new_indices])
-        return extrapolated_motions
-
-    def __len__(self):
-        'Denotes the total number of samples'
-        return len(self.motions_2d)
-
-    def __getitem__(self, index):
-        'Generates one sample of data'
-        motion_2d = torch.FloatTensor(self.motions_2d[index])
-        if self.flip and random.random()>0.5:                       
-            motion_2d = flip_data(motion_2d)
-        return motion_2d, motion_2d
-    
-
-class InstaVDataset2D(Dataset):
-    def __init__(self, n_frames=243, data_stride=81, flip=True, valid_threshold=0.0, scale_range=[0.25, 1],
-                 data_root_2d='data/motion2d/'):
-        super(InstaVDataset2D, self).__init__()
-        self.flip = flip
-        self.scale_range = scale_range
-        motion_all = np.load(os.path.join(data_root_2d, 'InstaVariety/motion_all.npy'))
-        id_all = np.load(os.path.join(data_root_2d, 'InstaVariety/id_all.npy'))
-        split_id = split_clips(id_all, n_frames, data_stride)  
-        motions_2d = motion_all[split_id]                        # [N, T, 17, 3]
-        valid_idx = (motions_2d[:,0,0,2] > valid_threshold)
-        self.motions_2d = motions_2d[valid_idx]
-        
-    def __len__(self):
-        'Denotes the total number of samples'
-        return len(self.motions_2d)
-
-    def __getitem__(self, index):
-        'Generates one sample of data'
-        motion_2d = self.motions_2d[index]
-        motion_2d = crop_scale(motion_2d, self.scale_range) 
-        motion_2d[motion_2d[:,:,2]==0] = 0
-        if self.flip and random.random()>0.5:                       
-            motion_2d = flip_data(motion_2d)
-        motion_2d = torch.FloatTensor(motion_2d)
-        return motion_2d, motion_2d
-        
+          
     
 class MotionDataset3D(Dataset):
     def __init__(self, args, subset_list, data_split, return_stats=False):
