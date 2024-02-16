@@ -175,6 +175,15 @@ def turn_into_h36m(keypoints):
     return new_keypoints
 
 
+def flip_data(data, left_joints=[1, 2, 3, 14, 15, 16], right_joints=[4, 5, 6, 11, 12, 13]):
+    """
+    data: [N, F, 17, D] or [F, 17, D]
+    """
+    flipped_data = copy.deepcopy(data)
+    flipped_data[..., 0] *= -1  # flip x of all joints
+    flipped_data[..., left_joints + right_joints, :] = flipped_data[..., right_joints + left_joints, :]  # Change orders
+    return flipped_data
+
 
 def get_pose3D(video_path, output_dir):
     args, _ = argparse.ArgumentParser().parse_known_args()
@@ -231,21 +240,16 @@ def get_pose3D(video_path, output_dir):
         cv2.imwrite(output_dir_2D + str(('%04d'% i)) + '_2D.png', image)
 
     
-    joints_left =  [4, 5, 6, 11, 12, 13]
-    joints_right = [1, 2, 3, 14, 15, 16]
     print('\nGenerating 3D pose...')
     for idx, clip in enumerate(clips):
         input_2D = normalize_screen_coordinates(clip, w=img_size[1], h=img_size[0]) 
-
-        input_2D_aug = copy.deepcopy(input_2D)
-        input_2D_aug[..., 0] *= -1
-        input_2D_aug[..., joints_left + joints_right, :] = input_2D_aug[..., joints_right + joints_left, :]
+        input_2D_aug = flip_data(input_2D)
         
         input_2D = torch.from_numpy(input_2D.astype('float32')).cuda()
         input_2D_aug = torch.from_numpy(input_2D_aug.astype('float32')).cuda()
 
         output_3D_non_flip = model(input_2D) 
-        output_3D_flip = model(input_2D)
+        output_3D_flip = flip_data(model(input_2D_aug))
         output_3D = (output_3D_non_flip + output_3D_flip) / 2
 
         if idx == len(clips) - 1:
