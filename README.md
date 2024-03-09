@@ -1,8 +1,10 @@
+# [WACV 2024] MotionAGFormer: Enhancing 3D Human Pose Estimation With a Transformer-GCNFormer Network
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a> [![arXiv](https://img.shields.io/badge/arXiv-2210.06551-b31b1b.svg)](https://arxiv.org/abs/2310.16288) <a href="https://youtu.be/iyLhxPjwBuQ?si=yoG-wlz7N1fq-PmY"><img alt="Paper Explanation" src="https://img.shields.io/badge/-Paper Explanation in 9 Minutes-ea3323?logo=youtube"></a>
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/motionagformer-enhancing-3d-human-pose/monocular-3d-human-pose-estimation-on-human3)](https://paperswithcode.com/sota/monocular-3d-human-pose-estimation-on-human3?p=motionagformer-enhancing-3d-human-pose)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/motionagformer-enhancing-3d-human-pose/3d-human-pose-estimation-on-mpi-inf-3dhp?metric=MPJPE)](https://paperswithcode.com/sota/3d-human-pose-estimation-on-mpi-inf-3dhp?metric=MPJPE&p=motionagformer-enhancing-3d-human-pose)
 
+This is the official PyTorch implementation of the paper "[MotionAGFormer: Enhancing 3D Human Pose Estimation With a Transformer-GCNFormer Network](https://openaccess.thecvf.com/content/WACV2024/html/Mehraban_MotionAGFormer_Enhancing_3D_Human_Pose_Estimation_With_a_Transformer-GCNFormer_Network_WACV_2024_paper.html)" (WACV 2024).
 
 ## Environment
 The project is developed under the following environment:
